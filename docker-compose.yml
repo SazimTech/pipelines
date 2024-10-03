@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USE_CUDA: ${USE_CUDA:-false}
+        USE_CUDA_VER: ${USE_CUDA_VER:-cu117}
+    environment:
+      - ENV=prod
+      - USE_CUDA=${USE_CUDA:-false}
+      - USE_CUDA_VER=${USE_CUDA_VER:-cu117}
+      - HOST=0.0.0.0
+      - PORT=9099
+    ports:
+      - "9099:9099"
+    volumes:
+      - .:/app
+    entrypoint: ["bash", "start.sh"]
